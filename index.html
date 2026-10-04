@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Summarization Result</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .card {
+        width: min(700px, 90%);
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+      }
+
+      h1 {
+        margin-top: 0;
+        color: #1f2937;
+      }
+
+      .summary {
+        background: #eef6ff;
+        padding: 18px;
+        border-left: 5px solid #3b82f6;
+        border-radius: 8px;
+        color: #1f2937;
+        line-height: 1.7;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Text Summarization Result</h1>
+      <div id="summary" class="summary">Loading summary...</div>
+    </div>
+
+    <script>
+      const summaryElement = document.getElementById('summary');
+
+      // If your Python script writes the summary to summary_result.txt, this will load it.
+      fetch('summary_result.txt')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('File not found');
+          }
+          return response.text();
+        })
+        .then((text) => {
+          summaryElement.textContent = text.trim() || 'No summary available.';
+        })
+        .catch(() => {
+          // Fallback text if the file is not yet generated
+          summaryElement.textContent =
+            'There are many techniques available to generate extractive summarization. Summarization helps produce a concise and fluent summary while preserving the key information and overall meaning.';
+        });
+    </script>
+  </body>
+</html>
